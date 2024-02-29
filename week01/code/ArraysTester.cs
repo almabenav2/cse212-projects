@@ -39,8 +39,26 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return new double[0]; // replace this return statement with your own
+        //STEP 1: Create list to  store all possible multiples
+        List<double> multiplesList = new List<double>();
+
+        //STEP 2: Create for that iterates from 1 to the number of 
+        //multiples specified by 'length'.
+         for (int i = 1; i <= length; i++)
+            {
+
+            //STEP 3: Calculate the current multiple by multiplying 
+            //the base number by the current rate
+                double multiple = number * i;
+
+            //STEP 4: Add the multiple to the list
+                multiplesList.Add(multiple);
+            }
+
+        //STEP 5: Return list of multiples as an array of doubles
+        return multiplesList.ToArray();
     }
+    
     
     /// <summary>
     /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
@@ -57,5 +75,22 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
+        //STEP 1: Check if 'amount' is 0 or equal to list length
+        if (amount == 0 || amount == data.Count)
+        {
+            return;
+        }
+
+        //STEP 2: Handling overflow using the modulus operator
+        amount %= data.Count;
+
+        //STEP 3: Extract the part of the list that needs to be rotated
+        List<int> rotatedPart = data.GetRange(data.Count - amount, amount);
+
+        //STEP 4: Delete the extracted part of the original list
+        data.RemoveRange(data.Count - amount, amount);
+
+        //STEP 5: Insert the extracted part in the correct position after rotation.
+        data.InsertRange(0, rotatedPart);
     }
 }
