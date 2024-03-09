@@ -15,10 +15,12 @@
         // Console.WriteLine(players);    // This can be un-commented out for debug help
         while (players.Length > 0)
             players.GetNextPerson();
-        // Defect(s) Found: 
+        // Defect(s) Found: Corrected personqueue.cs, now ensures that the first person added is also the first to be dequeued
 
         Console.WriteLine("---------");
-
+        Console.WriteLine();
+        Console.WriteLine();
+        
         // Test 2
         // Scenario: Create a queue with the following people and turns: Bob (2), Tim (5), Sue (3)
         // After running 5 times, add George with 3 turns.  Run until the queue is empty.
@@ -38,9 +40,11 @@
         while (players.Length > 0)
             players.GetNextPerson();
 
-        // Defect(s) Found: 
+        // Defect(s) Found: none
 
         Console.WriteLine("---------");
+        Console.WriteLine();
+        Console.WriteLine();
 
         // Test 3
         // Scenario: Create a queue with the following people and turns: Bob (2), Tim (Forever), Sue (3)
@@ -56,11 +60,13 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: handled cases where persons have 0 or fewer turns
 
         Console.WriteLine("---------");
+        Console.WriteLine();
+        Console.WriteLine();
 
-         // Test 4
+        // Test 4
         // Scenario: Create a queue with the following people and turns: Tim (Forever), Sue (3)
         // Run 10 times.
         // Expected Result: Tim, Sue, Tim, Sue, Tim, Sue, Tim, Tim, Tim, Tim
@@ -73,9 +79,11 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: none
 
         Console.WriteLine("---------");
+        Console.WriteLine();
+        Console.WriteLine();
 
         // Test 5
         // Scenario: Try to get the next person from an empty queue
@@ -83,6 +91,6 @@
         Console.WriteLine("Test 5");
         players = new TakingTurnsQueue();
         players.GetNextPerson();
-        // Defect(s) Found:
+        // Defect(s) Found: none
     }
 }
