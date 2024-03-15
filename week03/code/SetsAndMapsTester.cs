@@ -89,6 +89,9 @@ public static class SetsAndMapsTester {
         // 4km SW of Volcano, Hawaii - Mag 1.99
     }
 
+
+
+
     /// <summary>
     /// The words parameter contains a list of two character 
     /// words (lower case, no duplicates). Using sets, find an O(n) 
@@ -107,11 +110,28 @@ public static class SetsAndMapsTester {
     /// that there were no duplicates) and therefore should not be displayed.
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
+    /// #############
+    /// # Problem 1 #
+    /// #############
     private static void DisplayPairs(string[] words) {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+        var processedWords = new HashSet<string>();
+
+        //Iterate through each word in the input array
+        foreach (var word in words) {
+            string reverse = new string(new char[] { word[1], word[0] }); // Generate reverse
+            if (reverse != word && processedWords.Contains(reverse)) {
+                // Ensure it's not the same word when reversed and it's in the set
+                Console.WriteLine($"{word} & {reverse}");
+            }
+            processedWords.Add(word);
+        }
     }
+
+
+
 
     /// <summary>
     /// Read a census file and summarize the degrees (education)
@@ -132,10 +152,22 @@ public static class SetsAndMapsTester {
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
             // Todo Problem 2 - ADD YOUR CODE HERE
+            if (fields.Length >= 4) {       
+                var degree = fields[3].Trim(); // Extract degree from 4th column
+                if (degrees.ContainsKey(degree)) {
+                    degrees[degree]++; // Increment count if degree exists
+                } else {
+                    degrees[degree] = 1; // Add degree to dictionary if not present
+                }
+            }
         }
 
         return degrees;
     }
+
+
+
+
 
     /// <summary>
     /// Determine if 'word1' and 'word2' are anagrams.  An anagram
@@ -158,8 +190,47 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        var dict1 = new Dictionary<char, int>();
+        var dict2 = new Dictionary<char, int>();
+
+        // Remove spaces and convert to lowercase
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
+        // Count frequencies of characters in word1
+        foreach (char c in word1) {
+            if (dict1.ContainsKey(c)) {
+                dict1[c]++;
+            } else {
+                dict1[c] = 1;
+            }
+        }
+
+        // Count frequencies of characters in word2
+        foreach (char c in word2) {
+            if (dict2.ContainsKey(c)) {
+                dict2[c]++;
+            } else {
+                dict2[c] = 1;
+            }
+        }
+
+        // Check if both dictionaries are equal
+        if (dict1.Count != dict2.Count) {
+            return false;
+        }
+
+        foreach (var kvp in dict1) {
+            if (!dict2.ContainsKey(kvp.Key) || dict2[kvp.Key] != kvp.Value) {
+                return false;
+            }
+        }
+
+        return true;
     }
+
+
+
 
     /// <summary>
     /// Sets up the maze dictionary for problem 4
@@ -235,5 +306,8 @@ public static class SetsAndMapsTester {
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+        foreach (var feature in featureCollection.Features) {
+            Console.WriteLine($"{feature.Properties.Place} - Mag {feature.Properties.Mag}");
+        }
     }
 }
