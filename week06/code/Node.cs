@@ -8,6 +8,10 @@ public class Node {
     }
 
     public void Insert(int value) {
+        if  (value == Data) {
+            return;
+        }
+        
         if (value < Data) {
             // Insert to the left
             if (Left is null)
@@ -26,11 +30,36 @@ public class Node {
 
     public bool Contains(int value) {
         // TODO Start Problem 2
-        return false;
+        if (value == Data) {
+        return true;
+        }
+        else if (value < Data && Left != null) {
+            // The value  can be in the left subtree
+            return Left.Contains(value);
+        }
+        else if (value > Data && Right != null) {
+            // The value  can be in the right subtree
+            return Right.Contains(value);
+        }
+        else {
+            // The value  does not exist in the tree
+            return false;
+        }
+        
     }
 
     public int GetHeight() {
         // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
-    }
+        // If node is null, height is 0 
+        if (this is null) {
+            return 0;
+        }
+
+        // Calculate  the height of left and right subtrees recursively
+        int leftHeight = Left?.GetHeight() ?? 0;
+        int rightHeight = Right?.GetHeight() ?? 0;
+
+        // The  height of a tree is one plus the maximum height
+        return 1 + Math.Max(leftHeight, rightHeight);
+        }
 }
